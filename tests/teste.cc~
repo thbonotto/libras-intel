@@ -9,20 +9,20 @@ struct tm * timeinfo;
 void salvar_imagem(Mat image){
 	time (&timer);
 	timeinfo = localtime (&timer);
-	imwrite( caminho+asctime(timeinfo)+".jpg", image );
+	imwrite( caminho+asctime(timeinfo), image );
 	cout << "Funcionando" << endl;
 
 }
 
 int main(int argc, char** argv) {
-	Mat image_old = imread(argv[1], 1);
+	Mat image_old = Tratamento_imagem::image_scale(imread(argv[1], 1),2,2);
 	double aux;
 	Mat image;
 
 	while(true){
-		image=imread(argv[1],1);		
+		image=Tratamento_imagem::image_scale(imread(argv[1],1),2,2);		
 			aux=Tratamento_imagem::getPSNR(image , image_old);			
-			if(aux < 20 && aux!=0){
+			if(aux < 20 && /*aux!=0*/){
 			salvar_imagem( image );			
 		}
 		sleep(atoi(argv[2]));

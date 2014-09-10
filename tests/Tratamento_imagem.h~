@@ -17,7 +17,7 @@ class Tratamento_imagem{
 
 	static const double alpha = 1; /**< Simple contrast control */
 	static const int beta = 90; /**< Simple brightness control */
-	static int const max_BINARY_value = 255;
+	static const int const max_BINARY_value = 255;
 
 
 	

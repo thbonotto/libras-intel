@@ -327,6 +327,12 @@ double Tratamento_imagem::getPSNR(const Mat& I1, const Mat& I2) {
 	}
 }
 
+double Tratamento_imagem::avg_similarity(Mat img1,Mat img2){
+	double PSNR=getPSNR(img1,img2);
+	Scalar mssim=getMSSIM(img1,img2);
+	return ((mssim[0]*PSNR+mssim[1]*PSNR+mssim[1]*PSNR)/3);
+	}
+
 // Tratamento_imagem constructor: must initialize Tratamento_imagem's attributes
 Tratamento_imagem::Tratamento_imagem() {
 }
