@@ -186,7 +186,7 @@ Mat Tratamento_imagem::hue_image(Mat image) {
 /*Função que aplica um alto contraste na foto
  param
  	 Mat image -> Imagem que vai ser trabalhada
- 	 int bins -> grau de BackProject (quando proxima de 0 imagem fica em PB. >20 imagem fica em tons de cinza).
+ 	 int bins -> grau de BackProject
 
  return -> retorna a imagem trabalhada;
 
