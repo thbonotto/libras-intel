@@ -3,20 +3,20 @@
 #include <iostream>
 
 
+
 String caminho = "../img/";
-String alfabeto[27] = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
-                       ,"Q","R","S","T","U","V","W","X","Y","Z");
+String caminho_salvar = "../img/Tratada/";
+String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
+                       ,"Q","R","S","T","U","V","W","X","Y","Z"};
 
 int main(int argc, char** argv) {
-	Mat image;
-	image=imread(argv[1],1);		
-	image = Tratamento_imagem::Hist_and_Backproj(image,atoi(argv[2]));
+	Mat image,image_aux;
 	int i=0;
-	for(i;i<27;i++){
-		cout << "Letra :"+alfabeto[i] + " =  " + Tratamento_imagem::getPSNR(image,imread(caminho+alfabeto[i]+".jpg")) << endl; 
+	for(i;i<26;i++){
+	image=imread(caminho+alfabeto[i]+".jpg",1);
+	image=(Tratamento_imagem::filtro_cinza(image)*1.5)<200;
+	imwrite(caminho_salvar+alfabeto[i]+".jpg",image);
 	}
-	
-	
-	
+
 
 }

@@ -229,13 +229,7 @@ Mat Tratamento_imagem::threshold_image(Mat image, int mode,int intensity){
  param
 	Mat image -> Imagem que vai ser trabalhada
 	int proporcao -> razao de proporcionalidade
-	int mode -> modo de operação do threshold
-		0: Binary
-		1: Binary Inverted
-		2: Threshold Truncated
-		3: Threshold to Zero
-		4: Threshold to Zero Inverted
-		
+	
  return -> retorna a imagem trabalhada;
 
  */
