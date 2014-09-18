@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 	int i=0;
 	for(i;i<26;i++){
 	image=imread(caminho+alfabeto[i]+".jpg",1);
-	image=(Tratamento_imagem::filtro_cinza(image)*1.5)<200;
+	image=(Tratamento_imagem::filtro_cinza(image))<128;
 	imwrite(caminho_salvar+alfabeto[i]+".jpg",image);
 	}
 
