@@ -1,24 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>861</width>
+    <height>734</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>MainWindow</string>
+  <property name="windowTitle">
+   <string>Intérprete Automático de Libras</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="centralWidget">
+   <widget class="Q3Frame" name="frame3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>810</width>
+      <height>650</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="Q3GroupBox" name="groupBox2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>320</y>
+       <width>740</width>
+       <height>320</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Últilma letra reconhecida:</string>
+     </property>
+     <widget class="QLabel" name="pixmapN">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/N.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapK">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/K.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapM">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/M.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapH">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/H.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapB">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/B.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapE">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/E.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapF">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/F.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapL">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/L.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapG">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/G.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapD">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/D.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapA">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/A.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapJ">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/J.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapC">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/C.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapP">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/P.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapO">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/O.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapQ">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/Q.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapI">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>30</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/I.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapR">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>120</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/R.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapS">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/S.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapT">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/T.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapU">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/U.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapV">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/V.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapW">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/W.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapX">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/X.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapY">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/Y.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapZ">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/Z.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pixmapIFSC">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>210</y>
+        <width>80</width>
+        <height>90</height>
+       </rect>
+      </property>
+      <property name="pixmap">
+       <pixmap>../../img/alpha_img/ifsc.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="Q3ButtonGroup" name="LanguageGroup">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>120</y>
+       <width>270</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QCheckBox" name="CB_Vocalize">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>20</y>
+        <width>93</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Vocalizar</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="ListLanguage">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>50</y>
+        <width>80</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>English</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Spanish</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QCheckBox" name="CB_Translate">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>93</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Traduzir</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="TLLanguage">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>50</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Idioma:</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="Q3GroupBox" name="recognizedWord">
+     <property name="geometry">
+      <rect>
+       <x>501</x>
+       <y>240</y>
+       <width>270</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Palavra reconhecida</string>
+     </property>
+     <widget class="QLineEdit" name="TL_recWord">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>200</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Libras</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="start">
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>70</y>
+       <width>100</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Iniciar</string>
+     </property>
+    </widget>
+    <widget class="Phonon::VideoWidget" name="VideoWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>411</width>
+       <height>281</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>861</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuIALIBRAS">
+    <property name="title">
+     <string>&amp;IALIBRAS</string>
+    </property>
+    <addaction name="actionIniciar"/>
+    <addaction name="actionSair"/>
+   </widget>
+   <widget class="QMenu" name="menuOp_es">
+    <property name="title">
+     <string>&amp;Opções</string>
+    </property>
+    <addaction name="actionFiltros"/>
+    <addaction name="actionC_mera"/>
+   </widget>
+   <widget class="QMenu" name="menuSObre">
+    <property name="title">
+     <string>&amp;Sobre</string>
+    </property>
+   </widget>
+   <addaction name="menuIALIBRAS"/>
+   <addaction name="menuOp_es"/>
+   <addaction name="menuSObre"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionIniciar">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Iniciar</string>
+   </property>
+  </action>
+  <action name="actionSair">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Sair</string>
+   </property>
+  </action>
+  <action name="actionFiltros">
+   <property name="text">
+    <string>&amp;Filtros</string>
+   </property>
+  </action>
+  <action name="actionC_mera">
+   <property name="text">
+    <string>&amp;Câmera</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Phonon::VideoWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">phonon/videowidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Q3GroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>Qt3Support/Q3GroupBox</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Q3Frame</class>
+   <extends>QFrame</extends>
+   <header>Qt3Support/Q3Frame</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Q3ButtonGroup</class>
+   <extends>Q3GroupBox</extends>
+   <header>Qt3Support/Q3ButtonGroup</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -13,19 +13,22 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
-using namespace std;
-using namespace cv;
+#include "Reconhecimento_imagem.h"
 
-String caminho = "../img/";
-String caminho_salvar = "../img/Tratada/";
-String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
-		,"Q","R","S","T","U","V","W","X","Y","Z"};
 
-char correlation(Mat realMap){
+static String caminho = "../../img/Tratada/Externo/";
+static String caminho_salvar = "../../img/Tratada/";
+static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
+        ,"Q","R","S","T","U","V","W","X","Y","Z"};
 
-	int method, resultColumns, resultRows, corr;
-	double* maxVal;
+
+ char Reconhecimento_imagem::reconhecer_imagem(Mat realMap){
+
+    int method, resultColumns, resultRows;
+    int i;
+    double* maxVal,*corr;
 	char c;	
+    int aux=0;
 	Point minLoc, maxLoc;
 	Mat result;
 	String comparisonMethods[] = {"CV_TM_SQDIFF", "CV_TM_SQDIFF_NORMED", "CV_TM_CCORR",
@@ -39,8 +42,10 @@ char correlation(Mat realMap){
 	//Bad parameters handling.
 	 */
 
-	for(int i;i<27;i++){	
-		Mat slamMap = imread(caminho+alfabeto[i]+".jpg",1);	
+    for(i=0;i<26;i++){
+        Mat slamMap = imread(caminho+alfabeto[i]+".jpg",-1);
+        cout << slamMap.size() << endl;
+        cout << alfabeto[i] << endl;
 		//Create the result image.
 		resultColumns = realMap.cols - slamMap.cols + 1; //# columns of result.
 		resultRows = realMap.rows - slamMap.rows + 1; //# rows of result.
@@ -124,12 +129,17 @@ char correlation(Mat realMap){
 the correlation result is worthless. Code copied from OpenCV MatchTemplate
 API.*/	
 		cout << "The score for " << comparisonMethods[method] << " is " << *maxVal << "\n";	
-		if(maxVal > corr){
-		  corr = maxVal;
-		  c = (char*)alfabeto[i];
+
+        if(abs(*maxVal) > abs(*corr)){
+          corr = maxVal;
+          char *a=new char[alfabeto[i].size()+1];
+          a[alfabeto[i].size()]=0;
+          memcpy(a,alfabeto[i].c_str(),alfabeto[i].size());
+          c = a[0];
+          aux=i;
 		}
 		
 	}
+    cout << "letra" << c << endl;
 	return c;	
 }
-
