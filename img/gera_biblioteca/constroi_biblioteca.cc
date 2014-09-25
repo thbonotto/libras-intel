@@ -12,6 +12,7 @@ String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","
 int main(int argc, char** argv) {
 	Mat image,image_aux;
 	int i=0;
+	int y=0;
 	//Montar biblioteca de contorno externo
 	if(atoi(argv[1])==0){
 		for(i;i<26;i++){
@@ -27,6 +28,19 @@ int main(int argc, char** argv) {
 			image=Tratamento_imagem::draw_contour_image(image);
 			imwrite(caminho_salvar_interno+alfabeto[i]+".jpg",image);
 		}
+	}
+
+	if(atoi(argv[1])==2){
+	for(i;i<26;i++){
+			image=imread(caminho+alfabeto[i]+".jpg",1);
+						
+			for(y=0;y<5;y++){	
+				image=Tratamento_imagem::image_scale(image,2,2);
+			}
+			imwrite(caminho+alfabeto[i]+".jpg",image);
+		}
+	
+	
 	}
 	
 }
