@@ -18,6 +18,6 @@ int main(int argc, char** argv) {
 	imwrite(caminho_salvar+alfabeto[i]+".jpg",image);
 	}
 	*/
-	image=imread(argv[1],1) * 1.5;
+	image=Tratamento_imagem::filtro_cinza(imread(argv[1],1) * 1.5);
 	imwrite("./A_teste.jpg",image);
 }
