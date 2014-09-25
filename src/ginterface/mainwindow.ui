@@ -655,7 +655,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Libras</string>
+       <string/>
       </property>
      </widget>
     </widget>
@@ -672,14 +672,26 @@
       <string>Iniciar</string>
      </property>
     </widget>
-    <widget class="Phonon::VideoWidget" name="VideoWidget">
+    <widget class="QLabel" name="pixmapPreview">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>100</x>
        <y>20</y>
-       <width>411</width>
-       <height>281</height>
+       <width>261</width>
+       <height>271</height>
       </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="pixmap">
+      <pixmap>../../img/a.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
      </property>
     </widget>
    </widget>
@@ -690,7 +702,7 @@
      <x>0</x>
      <y>0</y>
      <width>861</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuIALIBRAS">
@@ -754,11 +766,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>Phonon::VideoWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">phonon/videowidget.h</header>
-  </customwidget>
   <customwidget>
    <class>Q3GroupBox</class>
    <extends>QGroupBox</extends>

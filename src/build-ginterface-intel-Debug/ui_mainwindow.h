@@ -28,7 +28,6 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QWidget>
-#include <phonon/videowidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -77,7 +76,7 @@ public:
     Q3GroupBox *recognizedWord;
     QLineEdit *TL_recWord;
     QPushButton *start;
-    Phonon::VideoWidget *VideoWidget;
+    QLabel *pixmapPreview;
     QMenuBar *menuBar;
     QMenu *menuIALIBRAS;
     QMenu *menuOp_es;
@@ -298,13 +297,17 @@ public:
         start = new QPushButton(frame3);
         start->setObjectName(QString::fromUtf8("start"));
         start->setGeometry(QRect(670, 70, 100, 30));
-        VideoWidget = new Phonon::VideoWidget(frame3);
-        VideoWidget->setObjectName(QString::fromUtf8("VideoWidget"));
-        VideoWidget->setGeometry(QRect(30, 20, 411, 281));
+        pixmapPreview = new QLabel(frame3);
+        pixmapPreview->setObjectName(QString::fromUtf8("pixmapPreview"));
+        pixmapPreview->setGeometry(QRect(100, 20, 261, 271));
+        pixmapPreview->setAutoFillBackground(true);
+        pixmapPreview->setPixmap(QPixmap(QString::fromUtf8("../../img/a.jpg")));
+        pixmapPreview->setScaledContents(true);
+        pixmapPreview->setWordWrap(false);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 861, 27));
+        menuBar->setGeometry(QRect(0, 0, 861, 21));
         menuIALIBRAS = new QMenu(menuBar);
         menuIALIBRAS->setObjectName(QString::fromUtf8("menuIALIBRAS"));
         menuOp_es = new QMenu(menuBar);
@@ -350,7 +353,7 @@ public:
         CB_Translate->setText(QApplication::translate("MainWindow", "Traduzir", 0, QApplication::UnicodeUTF8));
         TLLanguage->setText(QApplication::translate("MainWindow", "Idioma:", 0, QApplication::UnicodeUTF8));
         recognizedWord->setTitle(QApplication::translate("MainWindow", "Palavra reconhecida", 0, QApplication::UnicodeUTF8));
-        TL_recWord->setText(QApplication::translate("MainWindow", "Libras", 0, QApplication::UnicodeUTF8));
+        TL_recWord->setText(QString());
         start->setText(QApplication::translate("MainWindow", "Iniciar", 0, QApplication::UnicodeUTF8));
         menuIALIBRAS->setTitle(QApplication::translate("MainWindow", "&IALIBRAS", 0, QApplication::UnicodeUTF8));
         menuOp_es->setTitle(QApplication::translate("MainWindow", "&Op\303\247\303\265es", 0, QApplication::UnicodeUTF8));

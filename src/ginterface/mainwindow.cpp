@@ -44,6 +44,9 @@ void MainWindow::on_start_clicked()
        this->letra_reconhecida('Z');
    }
    a=(++a!='[') ? a :'a';
+   QPixmap mypix (caminho.c_str());
+   ui->pixmapPreview->setPixmap(mypix);
+
 }
 
 void MainWindow::clickMenuButton(){
