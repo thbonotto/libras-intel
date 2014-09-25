@@ -12,11 +12,12 @@ String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","
 int main(int argc, char** argv) {
 	Mat image,image_aux;
 	int i=0;
-	for(i;i<26;i++){
+/*	for(i;i<26;i++){
 	image=imread(caminho+alfabeto[i]+".jpg",1);
 	image=(Tratamento_imagem::filtro_cinza(image))<128;
 	imwrite(caminho_salvar+alfabeto[i]+".jpg",image);
 	}
-
-
+	*/
+	image=imread(argv[1],1) * 1.5;
+	imwrite("./A_teste.jpg",image);
 }
