@@ -1,12 +1,11 @@
-all: Tratamento_imagem.o teste.o
-	g++ -o teste_novo Tratamento_imagem.o teste.o -lopencv_core -lopencv_imgproc -lopencv_highgui
- 
+all: Tratamento_imagem.o constroi_biblioteca.o
+	g++ -o constroi_biblioteca Tratamento_imagem.o constroi_biblioteca.o -lopencv_core -lopencv_imgproc -lopencv_highgui
 
 Tratamento_imagem.o: Tratamento_imagem.cc
 	g++ -c Tratamento_imagem.cc
 
-teste.o: teste.cc
-	g++ -c teste.cc 
+constroi_biblioteca.o: constroi_biblioteca.cc
+	g++ -c constroi_biblioteca.cc
 
 clean:
-	rm teste *.o
+	rm constroi_biblioteca *.o
