@@ -1,9 +1,8 @@
 #include "Tratamento_imagem.h"
 
-
 /*Função que deixa a imagem em tons de cinza
  param
- 	 Mat image -> Imagem que vai ser trabalhado e deixada em tons de cinza;
+ Mat image -> Imagem que vai ser trabalhado e deixada em tons de cinza;
 
  return -> retorna a imagem trabalhada;
 
@@ -15,7 +14,7 @@ Mat Tratamento_imagem::filtro_cinza(Mat image) {
 }
 /*Função que deixa a imagem em HSV
  param
- 	 Mat image -> Imagem que vai ser trabalhado e deixada em tons de cinza;
+ Mat image -> Imagem que vai ser trabalhado e deixada em tons de cinza;
 
  return -> retorna a imagem trabalhada;
 
@@ -27,15 +26,15 @@ Mat Tratamento_imagem::filtro_hsv(Mat image) {
 }
 /*Função que faz um blur na imagem, da uma embaçada na imagem;
  param
- 	 Mat image -> Imagem que vai ser trabalhado e deixada embaçada;
- 	 int modo -> mode de operação, se mode de operação.
+ Mat image -> Imagem que vai ser trabalhado e deixada embaçada;
+ int modo -> mode de operação, se mode de operação.
  
  1 -> Bilateral Filter
  2 -> Gaussina Bluer
 
  return -> retorna a imagem trabalhada;
  */
- Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
+Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
 	Mat aux_image;
 	switch (modo) {
 	case 1:
@@ -57,30 +56,34 @@ Mat Tratamento_imagem::filtro_hsv(Mat image) {
 }
 /*Função que satura a imagem
  param
- 	 Mat image -> Imagem que vai ser saturada;
+ Mat image -> Imagem que vai ser saturada;
 
  return -> retorna a imagem trabalhada;
- *//*
-Mat saturacao_imagem(Mat image) {
+ */
+Mat Tratamento_imagem::saturacao_imagem(Mat image) {
 
-	Mat aux_image;
+	double alpha = 1; /**< Simple contrast control */
+	int beta = 90; /**< Simple brightness control */
+		
+	Mat new_image = Mat::zeros(image.size(), image.type());
+	/// Do the operation new_image(i,j) = alpha*image(i,j) + beta
 	for (int y = 0; y < image.rows; y++) {
 		for (int x = 0; x < image.cols; x++) {
 			for (int c = 0; c < 3; c++) {
-				aux_image.at < Vec3b > (y, x)[c] = saturate_cast < uchar
+				new_image.at < Vec3b > (y, x)[c] = saturate_cast < uchar
 						> (alpha * (image.at < Vec3b > (y, x)[c]) + beta);
 			}
 		}
 	}
 
-	return aux_image;
+	return new_image;
 
 }
-*/
+
 /*Função cria uma jenela com imagem
  param
- 	 Mat image -> Imagem que vai ser visualizada;
- 	 nome_janela -> Nome que irá aparecer na janela;
+ Mat image -> Imagem que vai ser visualizada;
+ nome_janela -> Nome que irá aparecer na janela;
  */
 void Tratamento_imagem::mostra_imagem(Mat image, String nome_janela) {
 
@@ -91,8 +94,8 @@ void Tratamento_imagem::mostra_imagem(Mat image, String nome_janela) {
 
 /*Função que aplica metodo canny para destacar contornos na imagem
  param
- 	 Mat image -> Imagem que vai ser saturada;
- 	 int tresh -> grau do filtro Canny
+ Mat image -> Imagem que vai ser saturada;
+ int tresh -> grau do filtro Canny
 
  return -> retorna a imagem trabalhada;
  */
@@ -106,17 +109,15 @@ Mat Tratamento_imagem::canny(Mat image, int thresh) {
 	return aux_image;
 }
 
-
-
 /*Função que detecta os contornos a partir de uma imagem
  param
- 	 Mat image -> Imagem que vai ser identificado o contorno.
+ Mat image -> Imagem que vai ser identificado o contorno.
 
  return -> retorna classe Contorno com os dados do contorno(contours,hierarchy,size)
  
  Note
 
-Source image is modified by this function. Also, the function does not take into account 1-pixel border of the image (it’s filled with 0’s and used for neighbor analysis in the algorithm), therefore the contours touching the image border will be clipped.
+ Source image is modified by this function. Also, the function does not take into account 1-pixel border of the image (it’s filled with 0’s and used for neighbor analysis in the algorithm), therefore the contours touching the image border will be clipped.
  
  */
 Tratamento_imagem::Contorno Tratamento_imagem::find_contour(Mat image) {
@@ -134,11 +135,11 @@ Tratamento_imagem::Contorno Tratamento_imagem::find_contour(Mat image) {
 }
 /*Função que cria uma imagem a partir dos contornos
  param
- 	 Contorno -> Classe Contorno com os dados do contorno
+ Contorno -> Classe Contorno com os dados do contorno
 
  return -> retorna imagem desenhada a partir do contorno
  */
-Mat Tratamento_imagem::draw_contour(Tratamento_imagem::Contorno contornos){
+Mat Tratamento_imagem::draw_contour(Tratamento_imagem::Contorno contornos) {
 	Mat drawing = Mat::zeros(contornos.size(), CV_8UC3);
 	for (int i = 0; i < contornos.contours().size(); i++) {
 		Scalar color = Scalar(255, 255, 255);
@@ -150,13 +151,13 @@ Mat Tratamento_imagem::draw_contour(Tratamento_imagem::Contorno contornos){
 
 /*Função que cria uma imagem a partir dos contornos
  param
- 	 Mat image -> Imagem que quer achar o contorno
+ Mat image -> Imagem que quer achar o contorno
 
  return -> retorna imagem desenhada a partir do contorno
  */
-Mat Tratamento_imagem::draw_contour_image(Mat image){
-	Mat aux_image=image.clone();
-	Tratamento_imagem::Contorno contornos=find_contour(canny(aux_image,50));
+Mat Tratamento_imagem::draw_contour_image(Mat image) {
+	Mat aux_image = image.clone();
+	Tratamento_imagem::Contorno contornos = find_contour(canny(aux_image, 50));
 	Mat drawing = Mat::zeros(contornos.size(), CV_8UC3);
 	for (int i = 0; i < contornos.contours().size(); i++) {
 		Scalar color = Scalar(255, 255, 255);
@@ -167,7 +168,7 @@ Mat Tratamento_imagem::draw_contour_image(Mat image){
 }
 /*Função que deixa a imagem em HUE
  param
- 	 Mat image -> Imagem que vai ser trabalhado e deixada em HUE
+ Mat image -> Imagem que vai ser trabalhado e deixada em HUE
 
  return -> retorna a imagem trabalhada;
 
@@ -185,68 +186,69 @@ Mat Tratamento_imagem::hue_image(Mat image) {
 
 /*Função que aplica um alto contraste na foto
  param
- 	 Mat image -> Imagem que vai ser trabalhada
- 	 int bins -> grau de BackProject (quando proxima de 0 imagem fica em PB. >20 imagem fica em tons de cinza).
+ Mat image -> Imagem que vai ser trabalhada
+ int bins -> grau de BackProject (quando proxima de 0 imagem fica em PB. >20 imagem fica em tons de cinza).
 
  return -> retorna a imagem trabalhada;
 
  */
-Mat Tratamento_imagem::Hist_and_Backproj(Mat image,int bins) {
-	Mat aux_image=hue_image(image);
+Mat Tratamento_imagem::Hist_and_Backproj(Mat image, int bins) {
+	Mat aux_image = hue_image(image);
 	MatND hist;
 	int histSize = MAX(bins, 2);
 	float hue_range[] = { 0, 180 };
 	const float* ranges = { hue_range };
-	calcHist( &aux_image, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false );
-	normalize( hist, hist, 0, 255, NORM_MINMAX, -1, Mat() );
+	calcHist(&aux_image, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
+	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
 	MatND backproj;
-	calcBackProject( &aux_image, 1, 0, hist, backproj, &ranges, 1, true );
+	calcBackProject(&aux_image, 1, 0, hist, backproj, &ranges, 1, true);
 	return backproj;
-	
+
 }
 
 /*Função que aplica threshold
  param
-	Mat image -> Imagem que vai ser trabalhada
-	int intensity -> intensidade do operador
-	int mode -> modo de operação do threshold
-		0: Binary
-		1: Binary Inverted
-		2: Threshold Truncated
-		3: Threshold to Zero
-		4: Threshold to Zero Inverted
-		
+ Mat image -> Imagem que vai ser trabalhada
+ int intensity -> intensidade do operador
+ int mode -> modo de operação do threshold
+ 0: Binary
+ 1: Binary Inverted
+ 2: Threshold Truncated
+ 3: Threshold to Zero
+ 4: Threshold to Zero Inverted
+ 
  return -> retorna a imagem trabalhada;
 
  */
-Mat Tratamento_imagem::threshold_image(Mat image, int mode,int intensity){
-	Mat aux_image; 
-	threshold(image,aux_image,intensity,max_BINARY_value,mode);
+Mat Tratamento_imagem::threshold_image(Mat image, int mode, int intensity) {
+	Mat aux_image;
+	threshold(image, aux_image, intensity, max_BINARY_value, mode);
 	return aux_image;
 }
 
 /*Função que modifica o tamanho da imagem
  param
-	Mat image -> Imagem que vai ser trabalhada
-	int proporcao -> razao de proporcionalidade
-	
+ Mat image -> Imagem que vai ser trabalhada
+ int proporcao -> razao de proporcionalidade
+ 
  return -> retorna a imagem trabalhada;
 
  */
-Mat Tratamento_imagem::image_scale(Mat image,int mode,int proporcao)
-{
-	if(mode<=0 or proporcao<=0){
+Mat Tratamento_imagem::image_scale(Mat image, int mode, int proporcao) {
+	if (mode <= 0 or proporcao <= 0) {
 		cerr << "informação incorreta" << endl;
 	}
 	Mat aux_image;
-    switch(mode){
-    case 1:
-    	pyrUp( image, aux_image, Size( image.cols*proporcao, image.rows*proporcao) );
-    	return aux_image;
-    case 2:
-    	pyrDown( image, aux_image, Size( image.cols/proporcao, image.rows/proporcao ) );
-    	return aux_image;
-    }
+	switch (mode) {
+	case 1:
+		pyrUp(image, aux_image,
+				Size(image.cols * proporcao, image.rows * proporcao));
+		return aux_image;
+	case 2:
+		pyrDown(image, aux_image,
+				Size(image.cols / proporcao, image.rows / proporcao));
+		return aux_image;
+	}
 
 }
 
@@ -326,20 +328,22 @@ Tratamento_imagem::Tratamento_imagem() {
 }
 
 //Retorna imagem tratada 
-Mat Tratamento_imagem::tratar_imagem(Mat image){
-	
-	int i;	
-	for(i=0;i<3;i++){	
-	image=Tratamento_imagem::image_scale(image,2,2);
+Mat Tratamento_imagem::tratar_imagem(Mat image) {
+
+	int i;
+	for (i = 0; i < 3; i++) {
+		image = Tratamento_imagem::image_scale(image, 2, 2);
 	}
 	
-	return image=(Tratamento_imagem::filtro_cinza(image)) < cv::mean( image ).val[0];
+	image=image*1.25;
+	image = Tratamento_imagem::saturacao_imagem(image);
+	 
+	return image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
 
 }
 
 // Tratamento_imagem destructor: must finalize Tratamento_imagem's attributes
 Tratamento_imagem::~Tratamento_imagem() {
-return;
+	return;
 }
-
 

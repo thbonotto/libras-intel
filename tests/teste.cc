@@ -19,8 +19,6 @@ int main(int argc, char** argv) {
 	}
 	*/
 	image=imread(argv[1],1);
-	for(i=0;i<atoi(argv[2]);i++){	
-	image=Tratamento_imagem::image_scale(image,2,2);
-	}
-	imwrite("./F.jpg",image);
+	image= Tratamento_imagem::tratar_imagem(image);
+	imwrite("./teste.jpg",image);
 }
