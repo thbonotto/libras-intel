@@ -34,7 +34,7 @@ int * centroide_contorno(Mat image){
 	aux_sup=image.rows;
 	for(j=0; j<image.cols; j++){
 	    for(i=0; i<image.rows and image.at<uchar>(i,j)!=0; i++){
-			if(aux_sup>i and image.at<uchar>(i,j)!=0){
+			if(aux_sup<i and image.at<uchar>(i,j)!=0){
 				aux_sup=i;
 			}
 		}

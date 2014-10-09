@@ -324,8 +324,7 @@ double Tratamento_imagem::getPSNR(const Mat& I1, const Mat& I2) {
 }
 
 Mat Tratamento_imagem::cortar_image(Mat image,int p_inicial_x,int p_inicial_y,int tam_x,int tam_y){
-	Rect r(p_inicial_x, p_inicial_y, tam_x, tam_y);
-	return image(r);
+
 }
 
 // Tratamento_imagem constructor: must initialize Tratamento_imagem's attributes
