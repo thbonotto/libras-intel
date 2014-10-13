@@ -33,18 +33,18 @@ int * centroide_contorno(Mat image){
 	}
 	aux_sup=image.rows;
 	for(j=0; j<image.cols; j++){
-	    for(i=0; i<image.rows and image.at<uchar>(i,j)!=0; i++){
+		for(i=0; i<=image.rows; i++){
 			if(aux_sup>i and image.at<uchar>(i,j)!=0){
 				aux_sup=i;
 			}
 		}
 	}
-	cout << aux_esq << endl << aux_dir << endl << aux_sup << endl;
-	ret[0]=aux_esq;
-	ret[1]=aux_dir;
-	ret[2]=aux_sup;
-	ret[3]=cent_x;
-	ret[4]=cent_y;
+//	cout << aux_esq << endl << aux_dir << endl << aux_sup << endl;
+	ret[0] = aux_esq - ( aux_dir - aux_esq )/2;
+	ret[1] = aux_sup*0.5;	
+	ret[2] = ( aux_dir + ( aux_dir - aux_esq )/2 ) - aux_esq;
+	ret[3] = aux_sup*2;
+
 	return ret;
 	
 
@@ -56,9 +56,11 @@ int main(int argc, char** argv) {
 
 	image=imread(argv[1],1);
 	image= Tratamento_imagem::tratar_imagem(image);
-	image = Tratamento_imagem::cortar_image(image,0,0,90,90);
-	imwrite("./teste.jpg",image);
-	centroide_contorno(image);
+	int * ret = centroide_contorno(image);
+	cout << ret[0] << endl << ret[1] << endl << ret[2] << endl << ret[3] << endl;
+	image = Tratamento_imagem::cortar_image(image,ret[0],ret[1],ret[2],ret[3]);
+	imwrite("./teste.jpg",image);	
+	
 
 
 }
