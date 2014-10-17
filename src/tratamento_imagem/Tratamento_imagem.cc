@@ -60,7 +60,7 @@ Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
 
  return -> retorna a imagem trabalhada;
  */
-Mat Tratamento_imagem::saturacao_imagem(Mat image) {
+Mat Tratamento_imagem::contraste_imagem(Mat image) {
 
 	double alpha = 1; /**< Simple contrast control */
 	int beta = 90; /**< Simple brightness control */
@@ -252,58 +252,14 @@ Mat Tratamento_imagem::image_scale(Mat image, int mode, int proporcao) {
 
 }
 
-Scalar Tratamento_imagem::getMSSIM(const Mat& i1, const Mat& i2) {
-	const double C1 = 6.5025, C2 = 58.5225;
-	/***************************** INITS **********************************/
-	int d = CV_32F;
+/*Função que compara duas imagens
+ param
+	Mat I1 -> Imagem1 que vai ser comparada
+	Mat I2 -> Imagem2 que vai ser comparada
+ 
+ return -> double com o valor de correlação das duas imagens
 
-	Mat I1, I2;
-	i1.convertTo(I1, d);           // cannot calculate on one byte large values
-	i2.convertTo(I2, d);
-
-	Mat I2_2 = I2.mul(I2);        // I2^2
-	Mat I1_2 = I1.mul(I1);        // I1^2
-	Mat I1_I2 = I1.mul(I2);        // I1 * I2
-
-	/***********************PRELIMINARY COMPUTING ******************************/
-
-	Mat mu1, mu2;   //
-	GaussianBlur(I1, mu1, Size(11, 11), 1.5);
-	GaussianBlur(I2, mu2, Size(11, 11), 1.5);
-
-	Mat mu1_2 = mu1.mul(mu1);
-	Mat mu2_2 = mu2.mul(mu2);
-	Mat mu1_mu2 = mu1.mul(mu2);
-
-	Mat sigma1_2, sigma2_2, sigma12;
-
-	GaussianBlur(I1_2, sigma1_2, Size(11, 11), 1.5);
-	sigma1_2 -= mu1_2;
-
-	GaussianBlur(I2_2, sigma2_2, Size(11, 11), 1.5);
-	sigma2_2 -= mu2_2;
-
-	GaussianBlur(I1_I2, sigma12, Size(11, 11), 1.5);
-	sigma12 -= mu1_mu2;
-
-	///////////////////////////////// FORMULA ////////////////////////////////
-	Mat t1, t2, t3;
-
-	t1 = 2 * mu1_mu2 + C1;
-	t2 = 2 * sigma12 + C2;
-	t3 = t1.mul(t2);              // t3 = ((2*mu1_mu2 + C1).*(2*sigma12 + C2))
-
-	t1 = mu1_2 + mu2_2 + C1;
-	t2 = sigma1_2 + sigma2_2 + C2;
-	t1 = t1.mul(t2);   // t1 =((mu1_2 + mu2_2 + C1).*(sigma1_2 + sigma2_2 + C2))
-
-	Mat ssim_map;
-	divide(t3, t1, ssim_map);      // ssim_map =  t3./t1;
-
-	Scalar mssim = mean(ssim_map); // mssim = average of ssim map
-	return mssim;
-}
-
+ */
 double Tratamento_imagem::getPSNR(const Mat& I1, const Mat& I2) {
 	Mat s1;
 	absdiff(I1, I2, s1);       // |I1 - I2|
@@ -327,18 +283,100 @@ double Tratamento_imagem::getPSNR(const Mat& I1, const Mat& I2) {
 Tratamento_imagem::Tratamento_imagem() {
 }
 
+/*Função que recorta a imagem
+ param
+ 	Mat image -> Imagem que vai ser trabalhada
+ 	int p_inicial_x -> Ponto de origem do recorte no eixo X
+ 	int p_inicial_y -> Ponto de origem do recorte no eixo Y
+	int tam_x -> Tamanho em pixels do recorte no eixo X
+	int tam_y -> Tamanho em pixels do recorte no eixo Y
+ 
+ return -> retorna a imagem trabalhada;
+
+ */
+Mat Tratamento_imagem::cortar_imagem(Mat image,int p_inicial_x,int p_inicial_y,int tam_x,int tam_y){
+	Rect r(p_inicial_x, p_inicial_y, tam_x, tam_y);
+	return image(r);
+}
+
+/*Função que centraliza uma imagem matendo uma relação de distância padrão
+Obs: A imagem deve estar em escalas de cinza e binarizada já
+ param
+ 	Mat image -> Imagem que vai ser centralizada
+ 	
+ return -> retorna a imagem trabalhada;
+
+ */
+Mat Tratamento_imagem::centroide_contorno(Mat image){
+
+	int i,j,aux_esq,aux_dir,aux_sup,cent_x,cent_y;
+     	int *ret = (int*)malloc(100*sizeof(int));
+	Mat aux = Mat::zeros( image.rows*2,image.cols*2, CV_8UC1 );
+	for(i=0;i<image.rows;i++){
+		for(j=0;j<image.cols;j++){
+			aux.at<uchar>(i+(image.rows/2),j+(image.cols/2))=image.at<uchar>(i,j);
+		}
+	
+	}
+	image=aux;
+	aux_esq=image.cols;
+	for(i=0; i<image.rows; i++){
+	    for(j=0; j<image.cols; j++){
+			if(aux_esq>j and image.at<uchar>(i,j)!=0){
+				aux_esq=j;
+			}
+		}
+	}
+	aux_dir=0;
+	for(i=0; i<image.rows; i++){
+	    for(j=image.cols; j>=0 ; j--){
+			if(aux_dir<j and image.at<uchar>(i,j)!=0){
+				aux_dir=j;
+			}
+		}
+	}
+	aux_sup=image.rows;
+	for(j=0; j<image.cols; j++){
+		for(i=0; i<=image.rows; i++){
+			if(aux_sup>i and image.at<uchar>(i,j)!=0){
+				aux_sup=i;
+			}
+		}
+	}
+	ret[0] = (aux_esq-(aux_dir-aux_esq)/2);
+	ret[1] = aux_sup*0.5;
+	ret[2] = ((aux_dir - aux_esq)*1.5);
+	if(aux_sup==0){
+		ret[3] = image.rows/2;
+		cout << "==0" << endl;	
+
+	}else{
+		if((image.rows/aux_sup)>3){
+			ret[3] = aux_sup*3;
+			cout << ">3" << endl;	
+		}
+		else{	
+			cout << "<3" << endl;
+			ret[3] = aux_sup*2;
+		}
+	}
+	image = Tratamento_imagem::cortar_imagem(aux,ret[0],ret[1],ret[2],ret[3]);
+	return image;
+
+}
+
+
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
 	int i;
-	for (i = 0; i < 3; i++) {
-		image = Tratamento_imagem::image_scale(image, 2, 2);
-	}
 	
 	image=image*1.25;
-	image = Tratamento_imagem::saturacao_imagem(image);
-	 
-	return image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
+	image = Tratamento_imagem::contraste_imagem(image);
+	image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
+	image = Tratamento_imagem::centroide_contorno(image);
+
+	return image;
 
 }
 
