@@ -5,6 +5,7 @@
 #include "../tratamento_imagem/Tratamento_imagem.h"
 #include "../correlation/Reconhecimento_imagem.h"
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <iostream>
 #include <ostream>
@@ -28,8 +29,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 void MainWindow::on_start_clicked()
 {
+
    static char a = 'a';
    String caminho = "../../img/" + string(1, a) + ".jpg";
    Mat source, dest;
@@ -44,8 +47,25 @@ void MainWindow::on_start_clicked()
        this->letra_reconhecida('Z');
    }
    a=(++a!='[') ? a :'a';
-   QPixmap mypix (caminho.c_str());
-   ui->pixmapPreview->setPixmap(mypix);
+      Mat frame;
+        // open the default camera
+
+  VideoCapture cap(0);
+       if(!cap.isOpened())  // check if we succeeded
+           return;
+
+       cap >> frame;
+        QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888));
+        ui->pixmapPreview->setPixmap(mypix);
+       try {
+       dest =  Tratamento_imagem::tratar_imagem(frame);
+       this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
+
+       } catch (...) {
+           this->letra_reconhecida('Z');
+       }
+
+
 
 }
 
