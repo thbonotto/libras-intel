@@ -11,6 +11,13 @@ String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","
                        ,"Q","R","S","T","U","V","W","X","Y","Z"};
 
 
+Mat image_resize(Mat image,int lin,int col){
+
+	Size size(lin,col);
+	resize(image,image,size);//resize image
+	return image;
+
+}
 
 
 int main(int argc, char** argv) {
@@ -19,7 +26,8 @@ int main(int argc, char** argv) {
 
 	image=imread(argv[1],1);
 	image= Tratamento_imagem::tratar_imagem(image);
-	imwrite("./teste.jpg",image);		
+	imwrite("./teste.jpg",image);
+
 	
 	
 

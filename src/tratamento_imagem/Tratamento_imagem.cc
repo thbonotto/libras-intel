@@ -372,6 +372,26 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 
 }
 
+
+/*Função que redefine o tamanho da imagem em pixels
+
+ param
+ 	Mat image -> Imagem que vai ser centralizada
+	int lin -> tamanho em linhas
+	int col -> tamanho em colunas
+ 	
+ return -> retorna a imagem trabalhada;
+
+ */
+
+Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
+
+	Size size(lin,col);
+	resize(image,image,size);//resize image
+	return image;
+
+}
+
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
@@ -381,6 +401,7 @@ Mat Tratamento_imagem::tratar_imagem(Mat image) {
 	image = Tratamento_imagem::contraste_imagem(image);
 	image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
 	image = Tratamento_imagem::centroide_contorno(image);
+	image = Tratamento_imagem::image_resize(image,100,100);
 
 	return image;
 

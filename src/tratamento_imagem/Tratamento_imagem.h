@@ -93,6 +93,8 @@ class Tratamento_imagem{
 	static Mat cortar_imagem(Mat image,int p_inicial_x,int p_inicial_y,int tam_x,int tam_y);
 
 	static Mat centroide_contorno(Mat image);
+
+	static Mat image_resize(Mat image,int lin,int col);
 			
 	
 	private:
