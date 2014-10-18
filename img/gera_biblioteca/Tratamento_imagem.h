@@ -62,7 +62,7 @@ class Tratamento_imagem{
 	
 	static Mat blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH);
 	
-//	Mat saturacao_imagem(Mat image);
+	static Mat contraste_imagem(Mat image);
 	
 	static void mostra_imagem(Mat image, String nome_janela);
 	
@@ -87,6 +87,12 @@ class Tratamento_imagem{
 	static double getPSNR(const Mat& I1, const Mat& I2);
 	
 	static double avg_similarity(Mat img1,Mat img2);
+
+	static Mat tratar_imagem(Mat image);
+
+	static Mat cortar_imagem(Mat image,int p_inicial_x,int p_inicial_y,int tam_x,int tam_y);
+
+	static Mat centroide_contorno(Mat image);
 			
 	
 	private:

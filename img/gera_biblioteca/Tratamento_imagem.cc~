@@ -352,8 +352,8 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 
 
 	}else{
-		if((image.rows/aux_sup)>10){
-			ret[3] = aux_sup*10;
+		if((image.rows/aux_sup)>8){
+			ret[3] = aux_sup*8;
 
 		}else{
 		if((image.rows/aux_sup)>5){

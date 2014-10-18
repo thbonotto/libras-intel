@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 	if(atoi(argv[1])==0){
 		for(i;i<26;i++){
 			image=imread(caminho+alfabeto[i]+".jpg",1);
-			image=(Tratamento_imagem::filtro_cinza(image)) < cv::mean( image ).val[0];
+			image= Tratamento_imagem::tratar_imagem(image);
 			imwrite(caminho_salvar_externo+alfabeto[i]+".jpg",image);
 		}
 	}
