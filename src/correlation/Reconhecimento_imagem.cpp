@@ -29,7 +29,7 @@ static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M
     double* maxVal,*corr;
 	char c;	
     int aux=0;
-	Point minLoc, maxLoc;
+    Point minLoc, maxLoc;
 	Mat result;
 	String comparisonMethods[] = {"CV_TM_SQDIFF", "CV_TM_SQDIFF_NORMED", "CV_TM_CCORR",
 			"CV_TM_CCORR_NORMED", "CV_TM_CCOEFF", "CV_TM_CCOEFF_NORMED"}; //List of comparison methods.

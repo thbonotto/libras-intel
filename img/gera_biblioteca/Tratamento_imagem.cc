@@ -309,7 +309,7 @@ Obs: A imagem deve estar em escalas de cinza e binarizada já
  */
 Mat Tratamento_imagem::centroide_contorno(Mat image){
 
-	int i,j,aux_esq,aux_dir,aux_sup,cent_x,cent_y;
+    int i,j,aux_esq,aux_dir,aux_sup;
      	int *ret = (int*)malloc(100*sizeof(int));
 	Mat aux = Mat::zeros( image.rows*2,image.cols*2, CV_8UC1 );
 	for(i=0;i<image.rows;i++){
@@ -366,8 +366,14 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 		}
 		}
 	}
-//	cout << ret[0] << endl << ret[1] << endl << ret[2] << endl << ret[3] << endl;
-	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.rows/4,ret[1]+aux.cols/4,ret[2],ret[3]+aux.cols/4);
+	/*cout << ret[0] << endl << ret[1] << endl << ret[2] << endl << ret[3] << endl << aux.rows/4 << endl << aux.cols/4 << endl << endl;
+	cout << aux.rows << endl << aux.cols << endl << endl;
+	if((ret[0]+aux.cols/4 + ret[2])<= aux.cols)
+		cout << "true" << endl;
+	if((ret[1]+aux.rows/4 + ret[3]+aux.rows/4)<= aux.rows)
+			cout << "true" << endl;
+	*/
+	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]+aux.rows/5);
 	return image;
 
 }
@@ -395,8 +401,7 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
-	int i;
-	
+
 	image=image*1.25;
 	image = Tratamento_imagem::contraste_imagem(image);
 	image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];

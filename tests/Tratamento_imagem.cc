@@ -366,8 +366,8 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 		}
 		}
 	}
-//	cout << ret[0] << endl << ret[1] << endl << ret[2] << endl << ret[3] << endl;
-	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.rows/4,ret[1]+aux.cols/4,ret[2],ret[3]+aux.cols/4);
+	cout << ret[0] << endl << ret[1] << endl << ret[2] << endl << ret[3] << endl;
+	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]+aux.rows/5);
 	return image;
 
 }

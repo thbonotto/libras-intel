@@ -37,7 +37,7 @@ void MainWindow::on_start_clicked()
    String caminho = "../../img/" + string(1, a) + ".jpg";
    Mat source, dest;
    char letra;
-   source = imread(caminho);
+/*   source = imread(caminho);
    dest = Tratamento_imagem::tratar_imagem(source);
    imwrite("../../img/database_img/_tratada.jpg",dest);
    try {
@@ -47,9 +47,9 @@ void MainWindow::on_start_clicked()
        this->letra_reconhecida('Z');
    }
    a=(++a!='[') ? a :'a';
-      Mat frame;
+*/
+   Mat frame;
         // open the default camera
-
   VideoCapture cap(0);
        if(!cap.isOpened())  // check if we succeeded
            return;
@@ -58,7 +58,9 @@ void MainWindow::on_start_clicked()
         QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888));
         ui->pixmapPreview->setPixmap(mypix);
        try {
+       imwrite("../../img/database_img/ant_tratada.jpg",frame);
        dest =  Tratamento_imagem::tratar_imagem(frame);
+       imwrite("../../img/database_img/ant_tratada.jpg",dest);
        this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
 
        } catch (...) {
