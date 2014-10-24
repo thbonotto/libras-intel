@@ -88,12 +88,13 @@ void MainWindow::on_start_clicked()
             return ;
 
         cap >> frame;
-        QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888));
-        ui->pixmapPreview->setPixmap(mypix);
-        cvtColor(frame, dest, CV_BGR2GRAY);
-        GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
-        Canny(dest, dest, 0, 30, 3);
+//        cvtColor(frame, dest, CV_BGR2GRAY);
+//        GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
+//        Canny(dest, dest, 0, 30, 3);
+        dest = Tratamento_imagem::tratar_imagem_contorno_interno(frame);
         imwrite("../../img/Tratada/dest.jpg",dest);
+        QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) dest.data, dest.cols, dest.rows, QImage::Format_RGB888));
+        ui->pixmapPreview->setPixmap(mypix);
         this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
 
 
