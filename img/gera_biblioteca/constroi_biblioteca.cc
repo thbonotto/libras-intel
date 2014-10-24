@@ -25,11 +25,7 @@ int main(int argc, char** argv) {
 	if(atoi(argv[1])==1){
 		for(i;i<26;i++){
 			image=imread(caminho+alfabeto[i]+".jpg",1);
-            cvtColor(image, image, CV_BGR2GRAY);
-            GaussianBlur(image, image, Size(7,7), 1.5, 1.5);
-            Canny(image, image, 0, 30, 3);
-        //	image = Tratamento_imagem::centroide_contorno(image);
-        //	image = Tratamento_imagem::image_resize(image,100,100);
+			image = Tratamento_imagem::tratar_imagem_contorno_interno(image);
 			imwrite(caminho_salvar_interno+alfabeto[i]+".jpg",image);
 		}
 	}	

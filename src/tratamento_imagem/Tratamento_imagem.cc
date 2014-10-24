@@ -62,8 +62,8 @@ Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
  */
 Mat Tratamento_imagem::contraste_imagem(Mat image) {
 
-	double alpha = 1; /**< Simple contrast control */
-	int beta = 90; /**< Simple brightness control */
+	double alpha = 2; /**< Simple contrast control */
+	int beta = 0; /**< Simple brightness control */
 		
 	Mat new_image = Mat::zeros(image.size(), image.type());
 	/// Do the operation new_image(i,j) = alpha*image(i,j) + beta
@@ -158,7 +158,7 @@ Mat Tratamento_imagem::draw_contour(Tratamento_imagem::Contorno contornos) {
 Mat Tratamento_imagem::draw_contour_image(Mat image) {
 	Mat aux_image = image.clone();
 	Tratamento_imagem::Contorno contornos = find_contour(canny(aux_image, 50));
-	Mat drawing = Mat::zeros(contornos.size(), CV_8UC3);
+	Mat drawing = Mat::zeros(contornos.size(), CV_8UC1);
 	for (int i = 0; i < contornos.contours().size(); i++) {
 		Scalar color = Scalar(255, 255, 255);
 		drawContours(drawing, contornos.contours(), i, color, 2, 8,
@@ -309,7 +309,7 @@ Obs: A imagem deve estar em escalas de cinza e binarizada já
  */
 Mat Tratamento_imagem::centroide_contorno(Mat image){
 
-    int i,j,aux_esq,aux_dir,aux_sup;
+	int i,j,aux_esq,aux_dir,aux_sup;
      	int *ret = (int*)malloc(100*sizeof(int));
 	Mat aux = Mat::zeros( image.rows*2,image.cols*2, CV_8UC1 );
 	for(i=0;i<image.rows;i++){
@@ -318,7 +318,6 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 		}
 	
 	}
-	imwrite("./teste_aux.jpg",aux);		
 
 	aux_esq=image.cols;
 	for(i=0; i<image.rows; i++){
@@ -348,26 +347,37 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 	ret[1] = aux_sup*0.5;
 	ret[2] = ((aux_dir - aux_esq)*1.5);
 	if(aux_sup==0){
-		ret[3] = image.rows/2;
+
+		ret[3] = image.rows;
 
 
 	}else{
-		if((image.rows/aux_sup)>10){
-			ret[3] = aux_sup*10;
+		ret[3] = image.rows - aux_sup;
+		if((image.rows/(ret[3]+ret[1]))>3){
 
-		}else{
-		if((image.rows/aux_sup)>5){
-			ret[3] = aux_sup*5;
-
+			ret[3]=ret[3]*3;
 		}
-		else{	
+		else{
+			if((image.rows/(ret[3]+ret[1]))>2){
 
-			ret[3] = aux_sup*2;
-		}
+				ret[3]=ret[3]*2;
+			}
+			else{
+				if((image.rows/(ret[3]+ret[1]))>1.5){
+
+					ret[3]=ret[3]*1.5;
+				}
+			}
 		}
 	}
-
-	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]+aux.rows/5);
+	
+	
+	if((ret[0]+ret[2])>aux.cols)
+		cout << "X" << ret[0] << endl << ret[2] << endl << aux.cols << endl;
+	if(((ret[1]+aux.rows/4)+(ret[3]+aux.rows/5)>aux.rows))
+		cout << "Y" << (ret[1]+aux.rows/4) << endl << ret[3] << endl << aux.cols << endl;
+	
+	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]);
 	return image;
 
 }
@@ -395,12 +405,25 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
-
-	image=image*1.25;
+	image = Tratamento_imagem::image_resize(image,100,100);	
+//	image=image*1.1;
 	image = Tratamento_imagem::contraste_imagem(image);
-	image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
+	image = (Tratamento_imagem::filtro_cinza(image)) < (cv::mean(image).val[0]);
 	image = Tratamento_imagem::centroide_contorno(image);
 	image = Tratamento_imagem::image_resize(image,100,100);
+
+	return image;
+
+}
+
+//Retorna imagem tratada com contorno interno
+Mat Tratamento_imagem::tratar_imagem_contorno_interno(Mat image) {
+
+	image = Tratamento_imagem::image_resize(image,400,400);
+
+	image = Tratamento_imagem::draw_contour_image(image);	
+	image = Tratamento_imagem::centroide_contorno(image);
+	image = Tratamento_imagem::image_resize(image,400,400);
 
 	return image;
 
