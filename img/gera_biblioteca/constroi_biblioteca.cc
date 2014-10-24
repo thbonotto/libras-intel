@@ -29,17 +29,6 @@ int main(int argc, char** argv) {
 			imwrite(caminho_salvar_interno+alfabeto[i]+".jpg",image);
 		}
 	}
-
-	if(atoi(argv[1])==2){
-	for(i;i<26;i++){
-			image=imread(caminho+alfabeto[i]+".jpg",1);
-						
-			for(y=0;y<5;y++){	
-				image=Tratamento_imagem::image_scale(image,2,2);
-			}
-			imwrite(caminho+alfabeto[i]+".jpg",image);
-		}
-	
 	
 	}
 	
