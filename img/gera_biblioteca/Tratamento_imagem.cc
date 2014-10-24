@@ -62,8 +62,8 @@ Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
  */
 Mat Tratamento_imagem::contraste_imagem(Mat image) {
 
-	double alpha = 1; /**< Simple contrast control */
-	int beta = 90; /**< Simple brightness control */
+	double alpha = 2; /**< Simple contrast control */
+	int beta = 0; /**< Simple brightness control */
 		
 	Mat new_image = Mat::zeros(image.size(), image.type());
 	/// Do the operation new_image(i,j) = alpha*image(i,j) + beta
@@ -352,8 +352,8 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 
 
 	}else{
-		if((image.rows/aux_sup)>10){
-			ret[3] = aux_sup*10;
+		if((image.rows/aux_sup)>5){
+			ret[3] = aux_sup*5;
 
 		}else{
 		if((image.rows/aux_sup)>5){
@@ -366,13 +366,10 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 		}
 		}
 	}
-	/*cout << ret[0] << endl << ret[1] << endl << ret[2] << endl << ret[3] << endl << aux.rows/4 << endl << aux.cols/4 << endl << endl;
-	cout << aux.rows << endl << aux.cols << endl << endl;
-	if((ret[0]+aux.cols/4 + ret[2])<= aux.cols)
-		cout << "true" << endl;
-	if((ret[1]+aux.rows/4 + ret[3]+aux.rows/4)<= aux.rows)
-			cout << "true" << endl;
-	*/
+	if((ret[0]+ret[2])>aux.cols)
+		cout << "X" << ret[0] << endl << ret[2] << endl << aux.cols << endl;
+	if(((ret[1]+aux.rows/4)+(ret[3]+aux.rows/5)>aux.rows))
+		cout << "Y" << (ret[1]+aux.rows/4) << endl << (ret[3]+aux.rows/5) << endl << aux.cols << endl;
 	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]+aux.rows/5);
 	return image;
 
@@ -401,10 +398,13 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
-
-	image=image*1.25;
+	image = Tratamento_imagem::image_resize(image,100,100);	
+//	image=image*1.1;
+//	imwrite("./saturacao.jpg",image);
 	image = Tratamento_imagem::contraste_imagem(image);
-	image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
+	imwrite("./contraste.jpg",image);
+	image = (Tratamento_imagem::filtro_cinza(image)) < (cv::mean(image).val[0]);
+	imwrite("./bin.jpg",image);
 	image = Tratamento_imagem::centroide_contorno(image);
 	image = Tratamento_imagem::image_resize(image,100,100);
 

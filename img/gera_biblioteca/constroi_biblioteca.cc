@@ -4,7 +4,7 @@
 
 
 
-String caminho = "../database_img/";
+String caminho = "../src_image/";
 String caminho_salvar_externo = "../Tratada/Externo/";
 String caminho_salvar_interno = "../Tratada/Interno/";
 String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
