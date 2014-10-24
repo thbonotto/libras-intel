@@ -25,7 +25,9 @@ int main(int argc, char** argv) {
 	if(atoi(argv[1])==1){
 		for(i;i<26;i++){
 			image=imread(caminho+alfabeto[i]+".jpg",1);
+			image = Tratamento_imagem::image_resize(image,100,100);			
 			image=Tratamento_imagem::draw_contour_image(image);
+			image = Tratamento_imagem::centroide_contorno(image);
 			image = Tratamento_imagem::image_resize(image,100,100);	
 			imwrite(caminho_salvar_interno+alfabeto[i]+".jpg",image);
 		}

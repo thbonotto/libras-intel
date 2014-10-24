@@ -394,11 +394,20 @@ Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
 	image = Tratamento_imagem::image_resize(image,100,100);	
 //	image=image*1.1;
-//	imwrite("./saturacao.jpg",image);
 	image = Tratamento_imagem::contraste_imagem(image);
-	imwrite("./contraste.jpg",image);
 	image = (Tratamento_imagem::filtro_cinza(image)) < (cv::mean(image).val[0]);
-	imwrite("./bin.jpg",image);
+	image = Tratamento_imagem::centroide_contorno(image);
+	image = Tratamento_imagem::image_resize(image,100,100);
+
+	return image;
+
+}
+
+//Retorna imagem tratada 
+Mat Tratamento_imagem::tratar_imagem_contorno_interno(Mat image) {
+
+	image = Tratamento_imagem::image_resize(image,100,100);	
+	image=Tratamento_imagem::draw_contour_image(image);	
 	image = Tratamento_imagem::centroide_contorno(image);
 	image = Tratamento_imagem::image_resize(image,100,100);
 
