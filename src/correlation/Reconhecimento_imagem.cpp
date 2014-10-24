@@ -16,7 +16,7 @@
 #include "Reconhecimento_imagem.h"
 
 
-static String caminho = "../../img/Tratada/Externo/";
+static String caminho = "../../img/Tratada/Interno/";
 static String caminho_salvar = "../../img/Tratada/";
 static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
         ,"Q","R","S","T","U","V","W","X","Y","Z"};

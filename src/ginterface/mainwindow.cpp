@@ -9,15 +9,22 @@
 #include <string.h>
 #include <iostream>
 #include <ostream>
-
+#include <pthread.h>
 
 using namespace cv;
 using namespace std;
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+void  *showImage(void *fodasse);
+Mat dest;
+MainWindow::MainWindow(QWidget *parent) :   QMainWindow(parent),  ui(new Ui::MainWindow)
 {
+//    pthread_t threads[1];
+//    int rc;
+//    rc = pthread_create(&threads[0], NULL,showImage, (void *)ui);
+//    if (rc){
+//        cout << "Error:unable to create thread," << rc << endl;
+//        exit(-1);
+//    }
+
     ui->setupUi(this);
 
     connect(ui->actionSair, SIGNAL(triggered()), this, SLOT(clickMenuButton()));
@@ -29,15 +36,34 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void  *showImage(void *fodasse){
+    while(1){
+    Mat frame;
+    // open the default camera
+    VideoCapture cap(0);
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
+    if(!cap.isOpened())  // check if we succeeded
+        return (void*)-1;
+
+    cap >> frame;
+    Ui::MainWindow *hue = (Ui::MainWindow*)fodasse;
+    cvtColor(frame, dest, CV_BGR2GRAY);
+    GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
+    Canny(dest, dest, 0, 30, 3);
+    QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888));
+    hue->pixmapPreview->setPixmap(mypix);
+    }
+}
 
 void MainWindow::on_start_clicked()
 {
 
-   static char a = 'a';
-   String caminho = "../../img/" + string(1, a) + ".jpg";
-   Mat source, dest;
-   char letra;
-/*   source = imread(caminho);
+    static char a = 'a';
+    String caminho = "../../img/" + string(1, a) + ".jpg";
+    Mat source;
+    char letra;
+    /*   source = imread(caminho);
    dest = Tratamento_imagem::tratar_imagem(source);
    imwrite("../../img/database_img/_tratada.jpg",dest);
    try {
@@ -48,24 +74,28 @@ void MainWindow::on_start_clicked()
    }
    a=(++a!='[') ? a :'a';
 */
-   Mat frame;
-        // open the default camera
-  VideoCapture cap(0);
-       if(!cap.isOpened())  // check if we succeeded
-           return;
 
-       cap >> frame;
+
+        //       imwrite("../../img/database_img/ant_tratada.jpg",frame);
+        //       dest =  Tratamento_imagem::tratar_imagem(frame);
+        //       imwrite("../../img/database_img/ant_tratada.jpg",dest);
+        Mat frame;
+        // open the default camera
+        VideoCapture cap(0);
+        cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+        cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
+        if(!cap.isOpened())  // check if we succeeded
+            return ;
+
+        cap >> frame;
         QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888));
         ui->pixmapPreview->setPixmap(mypix);
-       try {
-       imwrite("../../img/database_img/ant_tratada.jpg",frame);
-       dest =  Tratamento_imagem::tratar_imagem(frame);
-       imwrite("../../img/database_img/ant_tratada.jpg",dest);
-       this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
+        cvtColor(frame, dest, CV_BGR2GRAY);
+        GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
+        Canny(dest, dest, 0, 30, 3);
+        imwrite("../../img/Tratada/dest.jpg",dest);
+        this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
 
-       } catch (...) {
-           this->letra_reconhecida('Z');
-       }
 
 
 
@@ -77,8 +107,8 @@ void MainWindow::clickMenuButton(){
 }
 void MainWindow::letra_reconhecida(char l)
 {
-        int i;
-        char a;
+    int i;
+    char a;
     ui->TL_recWord->setText(ui->TL_recWord->text() + l);
     for(i = 0, a = 'A'; i < 27; i++,a++){
         String caminho = "../../img/alpha_img/" + string(1, a) + ".png";
@@ -254,3 +284,4 @@ void MainWindow::letra_reconhecida(char l)
 
 
 }
+
