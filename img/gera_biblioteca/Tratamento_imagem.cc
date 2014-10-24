@@ -352,25 +352,19 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 
 
 	}else{
-		if((image.rows/aux_sup)>5){
-			ret[3] = aux_sup*5;
-
-		}else{
-		if((image.rows/aux_sup)>5){
-			ret[3] = aux_sup*5;
-
-		}
-		else{	
-
-			ret[3] = aux_sup*2;
-		}
+		ret[3] = image.rows - aux_sup;
+		if((image.rows/(ret[3]+ret[1]))>2){
+			ret[3]=ret[3]*2;
 		}
 	}
+	
+	
 	if((ret[0]+ret[2])>aux.cols)
 		cout << "X" << ret[0] << endl << ret[2] << endl << aux.cols << endl;
 	if(((ret[1]+aux.rows/4)+(ret[3]+aux.rows/5)>aux.rows))
-		cout << "Y" << (ret[1]+aux.rows/4) << endl << (ret[3]+aux.rows/5) << endl << aux.cols << endl;
-	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]+aux.rows/5);
+		cout << "Y" << (ret[1]+aux.rows/4) << endl << ret[3] << endl << aux.cols << endl;
+	
+	image = Tratamento_imagem::cortar_imagem(aux,ret[0]+aux.cols/4,ret[1]+aux.rows/4,ret[2],ret[3]);
 	return image;
 
 }
