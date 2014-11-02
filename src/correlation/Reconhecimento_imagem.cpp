@@ -33,7 +33,7 @@ static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M
 	Mat result;
 	String comparisonMethods[] = {"CV_TM_SQDIFF", "CV_TM_SQDIFF_NORMED", "CV_TM_CCORR",
 			"CV_TM_CCORR_NORMED", "CV_TM_CCOEFF", "CV_TM_CCOEFF_NORMED"}; //List of comparison methods.
-    method = CV_TM_SQDIFF_NORMED; //"Cross coefficient normed" by default.
+    method = CV_TM_CCORR_NORMED; //"Cross coefficient normed" by default.
 	//Bad parameters handling.
 	/*realMapPath = argv[1];
 	slamMapPath = argv[2];
