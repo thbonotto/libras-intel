@@ -62,8 +62,8 @@ Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
  */
 Mat Tratamento_imagem::contraste_imagem(Mat image) {
 
-	double alpha = 2; /**< Simple contrast control */
-	int beta = 0; /**< Simple brightness control */
+	double alpha = 1; /**< Simple contrast control */
+	int beta = 50; /**< Simple brightness control */
 		
 	Mat new_image = Mat::zeros(image.size(), image.type());
 	/// Do the operation new_image(i,j) = alpha*image(i,j) + beta
@@ -406,10 +406,16 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
 	image = Tratamento_imagem::image_resize(image,100,100);	
-//	image=image*1.1;
-	image = Tratamento_imagem::contraste_imagem(image);
-	image = (Tratamento_imagem::filtro_cinza(image)) < (cv::mean(image).val[0]);
+	image=image*1.5;
+	imwrite("./imagem_saturada.jpeg",image);
+//	image = Tratamento_imagem::contraste_imagem(image);
+//	imwrite("./imagem_contraste.jpeg",image);
+	image = (Tratamento_imagem::filtro_cinza(image));
+	imwrite("./imagem_grayscale.jpeg",image);
+	image = image < (cv::mean(image).val[0]);
+	imwrite("./imagem_binarizada.jpeg",image);
 	image = Tratamento_imagem::centroide_contorno(image);
+	imwrite("./imagem_centralizada.jpeg",image);
 	image = Tratamento_imagem::image_resize(image,100,100);
 
 	return image;
@@ -421,7 +427,14 @@ Mat Tratamento_imagem::tratar_imagem_contorno_interno(Mat image) {
 
 	image = Tratamento_imagem::image_resize(image,400,400);
 
-	image = Tratamento_imagem::draw_contour_image(image);	
+	cvtColor(image, image, CV_BGR2GRAY);
+
+	GaussianBlur(image, image, Size(7,7), 1.5, 1.5);
+
+		
+	Canny(image, image, 0, 30, 3);
+	
+//	image = Tratamento_imagem::draw_contour_image(image);	
 	image = Tratamento_imagem::centroide_contorno(image);
 	image = Tratamento_imagem::image_resize(image,400,400);
 
