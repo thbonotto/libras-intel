@@ -62,7 +62,7 @@ Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
  */
 Mat Tratamento_imagem::contraste_imagem(Mat image) {
 
-	double alpha = 1; /**< Simple contrast control */
+	double alpha = 1.2; /**< Simple contrast control */
 	int beta = 90; /**< Simple brightness control */
 		
 	Mat new_image = Mat::zeros(image.size(), image.type());
@@ -318,7 +318,6 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 		}
 	
 	}
-	imwrite("./teste_aux.jpg",aux);		
 
 	aux_esq=image.cols;
 	for(i=0; i<image.rows; i++){
@@ -395,17 +394,47 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
-	int i;
-	
-	image=image*1.25;
+	image = Tratamento_imagem::image_resize(image,300,300);	
+	image=image*2;
+	imwrite("./imagem_saturada.jpeg",image);
 	image = Tratamento_imagem::contraste_imagem(image);
-	image = (Tratamento_imagem::filtro_cinza(image)) < cv::mean(image).val[0];
+	imwrite("./imagem_contraste.jpeg",image);
+	image = (Tratamento_imagem::filtro_cinza(image));
+	imwrite("./imagem_grayscale.jpeg",image);
+	image = image < (cv::mean(image).val[0]);
+	imwrite("./imagem_binarizada.jpeg",image);
 	image = Tratamento_imagem::centroide_contorno(image);
-	image = Tratamento_imagem::image_resize(image,100,100);
+	imwrite("./imagem_centralizada.jpeg",image);
+	image = Tratamento_imagem::image_resize(image,300,300);
 
 	return image;
 
 }
+
+//Retorna imagem tratada com contorno interno
+Mat Tratamento_imagem::tratar_imagem_contorno_interno(Mat image) {
+
+	image = Tratamento_imagem::image_resize(image,400,400);
+
+	
+	cvtColor(image, image, CV_BGR2GRAY);
+
+	GaussianBlur(image, image, Size(7,7), 1.5, 1.5);
+
+	Canny(image, image, 0, 30, 3);
+
+
+	/*
+	image = Tratamento_imagem::draw_contour_image(image);*/	
+	image = Tratamento_imagem::centroide_contorno(image);
+	image = Tratamento_imagem::image_resize(image,400,400);
+	
+
+	return image;
+
+}
+
+
 
 // Tratamento_imagem destructor: must finalize Tratamento_imagem's attributes
 Tratamento_imagem::~Tratamento_imagem() {

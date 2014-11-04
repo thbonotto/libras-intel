@@ -16,7 +16,7 @@
 #include "Reconhecimento_imagem.h"
 
 
-static String caminho = "../../img/Tratada/Interno/";
+static String caminho = "../../img/Tratada/Externo/";
 static String caminho_salvar = "../../img/Tratada/";
 static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
         ,"Q","R","S","T","U","V","W","X","Y","Z"};
@@ -33,7 +33,7 @@ static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M
 	Mat result;
 	String comparisonMethods[] = {"CV_TM_SQDIFF", "CV_TM_SQDIFF_NORMED", "CV_TM_CCORR",
 			"CV_TM_CCORR_NORMED", "CV_TM_CCOEFF", "CV_TM_CCOEFF_NORMED"}; //List of comparison methods.
-    method = CV_TM_SQDIFF_NORMED; //"Cross coefficient normed" by default.
+    method = CV_TM_CCORR_NORMED; //"Cross coefficient normed" by default.
 	//Bad parameters handling.
 	/*realMapPath = argv[1];
 	slamMapPath = argv[2];
@@ -44,8 +44,7 @@ static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M
 
     for(i=0;i<26;i++){
         Mat slamMap = imread(caminho+alfabeto[i]+".jpg",-1);
-        cout << slamMap.size() << endl;
-        cout << alfabeto[i] << endl;
+        cout << alfabeto[i] ;
 		//Create the result image.
 		resultColumns = realMap.cols - slamMap.cols + 1; //# columns of result.
 		resultRows = realMap.rows - slamMap.rows + 1; //# rows of result.
@@ -128,15 +127,17 @@ static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M
 		/*Display the result. If the images are not aligned at this point then
 the correlation result is worthless. Code copied from OpenCV MatchTemplate
 API.*/	
-		cout << "The score for " << comparisonMethods[method] << " is " << *maxVal << "\n";	
+        //cout << "The score for " << comparisonMethods[method] << " is " << *maxVal << "\n";
+
+        cout <<  *maxVal << "\n";
 
         if(abs(*maxVal) > abs(*corr)){
-          corr = maxVal;
-          char *a=new char[alfabeto[i].size()+1];
-          a[alfabeto[i].size()]=0;
-          memcpy(a,alfabeto[i].c_str(),alfabeto[i].size());
-          c = a[0];
-          aux=i;
+            corr = maxVal;
+            char *a=new char[alfabeto[i].size()+1];
+            a[alfabeto[i].size()]=0;
+            memcpy(a,alfabeto[i].c_str(),alfabeto[i].size());
+            c = a[0];
+            aux=i;
 		}
 		
 	}

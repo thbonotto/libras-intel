@@ -36,7 +36,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void  *showImage(void *fodasse){
+void  *showImage(void *p){
     while(1){
     Mat frame;
     // open the default camera
@@ -47,10 +47,10 @@ void  *showImage(void *fodasse){
         return (void*)-1;
 
     cap >> frame;
-    Ui::MainWindow *hue = (Ui::MainWindow*)fodasse;
-    cvtColor(frame, dest, CV_BGR2GRAY);
-    GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
-    Canny(dest, dest, 0, 30, 3);
+    Ui::MainWindow *hue = (Ui::MainWindow*)p;
+//    cvtColor(frame, dest, CV_BGR2GRAY);
+//    GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
+//    Canny(dest, dest, 0, 30, 3);
     QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888));
     hue->pixmapPreview->setPixmap(mypix);
     }
@@ -59,43 +59,43 @@ void  *showImage(void *fodasse){
 void MainWindow::on_start_clicked()
 {
 
-    static char a = 'a';
-    String caminho = "../../img/" + string(1, a) + ".jpg";
+   // static char a = '';
+  //  String caminho = "../../img/" + string(1, a) + ".jpg";
     Mat source;
     char letra;
-    /*   source = imread(caminho);
+     source = imread("../S.jpg");
    dest = Tratamento_imagem::tratar_imagem(source);
-   imwrite("../../img/database_img/_tratada.jpg",dest);
+   cout << "Teste" << endl;
+   imwrite("../_tratada.jpg",dest);
    try {
        letra = Reconhecimento_imagem::reconhecer_imagem(dest);
        this->letra_reconhecida(letra);
    } catch (...) {
        this->letra_reconhecida('Z');
    }
-   a=(++a!='[') ? a :'a';
-*/
+//   a=(++a!='[') ? a :'a';
 
 
         //       imwrite("../../img/database_img/ant_tratada.jpg",frame);
         //       dest =  Tratamento_imagem::tratar_imagem(frame);
         //       imwrite("../../img/database_img/ant_tratada.jpg",dest);
-        Mat frame;
-        // open the default camera
-        VideoCapture cap(0);
-        cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-        cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
-        if(!cap.isOpened())  // check if we succeeded
-            return ;
+//        Mat frame;
+//        // open the default camera
+  //      VideoCapture cap(0);
+    //    cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+      //  cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
+        //if(!cap.isOpened())  // check if we succeeded
+          //  return ;
 
-        cap >> frame;
+        //cap >> frame;
 //        cvtColor(frame, dest, CV_BGR2GRAY);
 //        GaussianBlur(dest, dest, Size(7,7), 1.5, 1.5);
 //        Canny(dest, dest, 0, 30, 3);
-        dest = Tratamento_imagem::tratar_imagem_contorno_interno(frame);
-        imwrite("../../img/Tratada/dest.jpg",dest);
+    //    dest = Tratamento_imagem::tratar_imagem_contorno_interno(frame);
+      //  imwrite("../../img/Tratada/dest.jpg",dest);
         QPixmap mypix = QPixmap::fromImage(QImage((unsigned char*) dest.data, dest.cols, dest.rows, QImage::Format_RGB888));
         ui->pixmapPreview->setPixmap(mypix);
-        this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
+     //   this->letra_reconhecida(Reconhecimento_imagem::reconhecer_imagem(dest));
 
 
 
