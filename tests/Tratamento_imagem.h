@@ -89,6 +89,8 @@ class Tratamento_imagem{
 	static double avg_similarity(Mat img1,Mat img2);
 
 	static Mat tratar_imagem(Mat image);
+	
+	static Mat tratar_imagem_contorno_interno(Mat image);
 
 	static Mat cortar_imagem(Mat image,int p_inicial_x,int p_inicial_y,int tam_x,int tam_y);
 

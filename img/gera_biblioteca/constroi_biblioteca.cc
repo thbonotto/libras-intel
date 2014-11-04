@@ -28,5 +28,14 @@ int main(int argc, char** argv) {
 			image = Tratamento_imagem::tratar_imagem_contorno_interno(image);
 			imwrite(caminho_salvar_interno+alfabeto[i]+".jpg",image);
 		}
-	}	
+	}
+	if(atoi(argv[1])==2){
+		for(i;i<26;i++){
+					image=imread(caminho_salvar_externo+alfabeto[i]+".jpg",1);
+					image = Tratamento_imagem::centroide_contorno(image);
+					imwrite(caminho_salvar_externo+alfabeto[i]+".jpg",image);
+				}
+	
+	}
+	
 }

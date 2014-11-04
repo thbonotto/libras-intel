@@ -157,7 +157,7 @@ Mat Tratamento_imagem::draw_contour(Tratamento_imagem::Contorno contornos) {
  */
 Mat Tratamento_imagem::draw_contour_image(Mat image) {
 	Mat aux_image = image.clone();
-	aux_image = Tratamento::filtro_cinza(aux_image);
+    aux_image = Tratamento_imagem::filtro_cinza(aux_image);
 	Tratamento_imagem::Contorno contornos = find_contour(canny(aux_image, 50));
 	Mat drawing = Mat::zeros(contornos.size(), CV_8UC1);
 	for (int i = 0; i < contornos.contours().size(); i++) {
@@ -402,16 +402,22 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 	return image;
 
 }
-
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
 
-	image = Tratamento_imagem::image_resize(image,100,100);	
-//	image=image*1.1;
+    image = Tratamento_imagem::image_resize(image,100,100);
+
+    image=image*2;
+
 	image = Tratamento_imagem::contraste_imagem(image);
-	image = (Tratamento_imagem::filtro_cinza(image)) < (cv::mean(image).val[0]);
+
+	image = (Tratamento_imagem::filtro_cinza(image));
+
+	image = image < (cv::mean(image).val[0]);
+
 	image = Tratamento_imagem::centroide_contorno(image);
-	image = Tratamento_imagem::image_resize(image,100,100);
+
+    image = Tratamento_imagem::image_resize(image,100,100);
 
 	return image;
 
