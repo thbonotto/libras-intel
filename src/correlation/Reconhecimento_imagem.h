@@ -24,9 +24,21 @@ using namespace cv;
 class Reconhecimento_imagem{
 
     public:
+    Reconhecimento_imagem(){
+        int i =0;
+        static String caminho = "../../img/Tratada/Interno/";
+        static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
+                ,"Q","R","S","T","U","V","W","X","Y","Z"};
+        for(i=0;i<26;i++){
+            this->letters[i] = imread(caminho+alfabeto[i]+".jpg",-1);
+        }
+
+    }
 
    static char reconhecer_imagem(Mat realMap);
    static vector<String> * reconhecer_imagem_vector(Mat realMap);
+private:
+   static Mat letters[27];
 
 
 
