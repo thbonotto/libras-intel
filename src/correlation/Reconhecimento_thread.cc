@@ -14,18 +14,15 @@
 #include <stdio.h>
 #include <string.h>
 #include "Reconhecimento_imagem.h"
-
+Semaphore sem(0);
 
 static String caminho = "../../img/Tratada/Externo/";
 static String caminho_salvar = "../../img/Tratada/";
 static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
         ,"Q","R","S","T","U","V","W","X","Y","Z"};
 
-void Reconhecimento_imagem::Reconhecimento_imagem(){
-
-}
- char Reconhecimento_imagem::reconhecer_imagem(Mat realMap){
-
+void* Reconhecimento_imagem::matching_result(Mat realMap){
+    full.v();
     int method, resultColumns, resultRows;
     int i;
     double* maxVal,*corr;
@@ -34,18 +31,11 @@ void Reconhecimento_imagem::Reconhecimento_imagem(){
     Point minLoc, maxLoc;
     Mat result;
     String comparisonMethods[] = {"CV_TM_SQDIFF", "CV_TM_SQDIFF_NORMED", "CV_TM_CCORR",
-            "CV_TM_CCORR_NORMED", "CV_TM_CCOEFF", "CV_TM_CCOEFF_NORMED"}; //List of comparison methods.
+            "CV_TM_CCORR_NORMED", "CV_TM_CCOEFF", "CV_TM_CCOEFF_NORMED"};
+    //List of comparison methods.
     method = CV_TM_CCORR_NORMED; //"Cross coefficient normed" by default.
-    //Bad parameters handling.
-    /*realMapPath = argv[1];
-    slamMapPath = argv[2];
-    Mat realMap = imread(realMapPath, 0); //Get the real map image. 0 is grayscale. -1 is original image.
-    Mat slamMap = imread(slamMapPath, 0); //Get the slam map image. 0 is grayscale. -1 is original image.
-    //Bad parameters handling.
-     */
-
     for(i=0;i<26;i++){
-        Mat slamMap = imread(caminho+alfabeto[i]+".jpg",-1);
+        Mat slamMap = this->letters[i];
         cout << alfabeto[i] ;
         //Create the result image.
         resultColumns = realMap.cols - slamMap.cols + 1; //# columns of result.
@@ -132,19 +122,30 @@ API.*/
         //cout << "The score for " << comparisonMethods[method] << " is " << *maxVal << "\n";
 
         cout <<  *maxVal << "\n";
+    sem.p();
+     }
+}
+vector<String> *  Reconhecimento_imagem::reconhecer_imagem(Mat realMap){
+    Thread * threads[27];
+        int i;
 
-        if(abs(*maxVal) > abs(*corr)){
-            corr = maxVal;
-            char *a=new char[alfabeto[i].size()+1];
-            a[alfabeto[i].size()]=0;
-            memcpy(a,alfabeto[i].c_str(),alfabeto[i].size());
-            c = a[0];
-            aux=i;
+        for(i=0; i < 26; i++){
+        threads[i] = new Thread(matching_result, realMap);
+         if (rc){
+             cout << "Error:unable to create thread," << rc << endl;
+             exit(-1);
+         }
         }
 
-    }
-    cout << "letra" << c << endl;
-    return c;
+
+     sem_wait(&sem);
+          if(abs(*maxVal) > abs(0.5)){
+              elements->push_back(alfabeto[i]);
+          }
+
+      }
+      return elements;
+
 }
 
  vector<String> * Reconhecimento_imagem::reconhecer_imagem_vector(Mat realMap){
@@ -243,7 +244,6 @@ API.*/
 
         if(abs(*maxVal) > abs(0.5)){
             elements->push_back(alfabeto[i]);
-
         }
 
     }
