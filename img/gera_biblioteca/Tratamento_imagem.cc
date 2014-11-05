@@ -63,7 +63,7 @@ Mat Tratamento_imagem::blur_imagem(Mat image, int modo, int MAX_KERNEL_LENGTH) {
 Mat Tratamento_imagem::contraste_imagem(Mat image) {
 
 	double alpha = 2; /**< Simple contrast control */
-	int beta = 20; /**< Simple brightness control */
+	int beta = 40; /**< Simple brightness control */
 		
 	Mat new_image = Mat::zeros(image.size(), image.type());
 	/// Do the operation new_image(i,j) = alpha*image(i,j) + beta
@@ -353,14 +353,14 @@ Mat Tratamento_imagem::centroide_contorno(Mat image){
 
 	}else{
 		ret[3] = image.rows - aux_sup;
-		if((image.rows/(ret[3]+ret[1]))>3){
+		if((image.rows/(ret[3]+ret[1]))>4){
 
-			ret[3]=ret[3]*3;
+			ret[3]=ret[3]*4;
 		}
 		else{
-			if((image.rows/(ret[3]+ret[1]))>2){
+			if((image.rows/(ret[3]+ret[1]))>3){
 
-				ret[3]=ret[3]*2;
+				ret[3]=ret[3]*3;
 			}
 			else{
 				if((image.rows/(ret[3]+ret[1]))>1.5){
@@ -408,7 +408,7 @@ Mat Tratamento_imagem::tratar_imagem(Mat image) {
 	
 	image = Tratamento_imagem::image_resize(image,100,100);
 
-   	image=image*1.8;
+   	image=image*1.9;
 
 	image = Tratamento_imagem::contraste_imagem(image);
 

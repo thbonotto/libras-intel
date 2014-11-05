@@ -61,6 +61,7 @@ void MainWindow::on_start_clicked()
 
    // static char a = '';
   //  String caminho = "../../img/" + string(1, a) + ".jpg";
+    vector<String> * imageVector;
     Mat source;
     char letra;
      source = imread("../S.jpg");
@@ -68,7 +69,8 @@ void MainWindow::on_start_clicked()
    cout << "Teste" << endl;
    imwrite("../_tratada.jpg",dest);
    try {
-       letra = Reconhecimento_imagem::reconhecer_imagem(dest);
+       imageVector = Reconhecimento_imagem::reconhecer_imagem_vector(dest);
+       //letra = Reconhecimento_imagem::reconhecer_imagem(dest);
        this->letra_reconhecida(letra);
    } catch (...) {
        this->letra_reconhecida('Z');

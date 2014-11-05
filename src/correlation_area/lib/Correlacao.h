@@ -11,9 +11,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <vector>
-#include "Tratamento_imagem.h"
+#include "../tratamento_imagem/Tratamento_imagem.h"
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_statistics.h>
+
 
 
 namespace cv{

@@ -35,8 +35,8 @@ void Correlacao::divide_image(Mat image){
 	int num_r = 0;
 
 	for(int y = 0; y < image.rows; y+=10){
-		for(int x = 0; x < image.cols && num_r < 100; x+=10){
-			this->rec[num_r] = Tratamento_imagem::cortar_image(image, x,y,x+=10,y);
+        for(int x = 0; x < image.cols && num_r < 100; x+=10){
+            this->rec[num_r] = Tratamento_imagem::cortar_imagem(image, x,y,x+10,y);
 			num_r++;
 		}
 	}

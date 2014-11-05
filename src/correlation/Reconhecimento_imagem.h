@@ -26,6 +26,8 @@ class Reconhecimento_imagem{
     public:
 
    static char reconhecer_imagem(Mat realMap);
+   static vector<String> * reconhecer_imagem_vector(Mat realMap);
+
 
 
 };
