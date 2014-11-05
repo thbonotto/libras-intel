@@ -20,7 +20,7 @@ namespace cv{
 
 class Correlacao{
 public:
-	//non-static
+
 	Correlacao();
 	~Correlacao();
 	double count_white(Mat square);
@@ -28,16 +28,14 @@ public:
 	void mount_vector(Mat image);
 	double pearson_correlation(std::vector<double> y);
 
-	//static
 	static size_t __stride;
 	static int __size;
-	std::vector <double> _feature;
 
 protected:
 
+	std::vector <double> _feature;
 	double _corr;
 	Mat *rec = new Mat[__size];
-
 
 };
 

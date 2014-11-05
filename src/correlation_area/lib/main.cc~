@@ -1,0 +1,29 @@
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include "Correlacao.h"
+
+using namespace cv;
+using namespace std;
+
+int main(int argc, char* argv[]){
+
+
+    Correlacao::Correlacao im1;
+    Correlacao::Correlacao im2;
+    vector <double> vectorCorr;
+    Mat image1 = imread(argv[1]);
+    Mat image2 = imread(argv[2]);
+
+
+    im1.mount_vector(image1);
+
+    im2.mount_vector(image2);
+
+    double result = im2.pearson_correlation(im1._feature);
+
+    cout << "==================" << endl;
+    cout << "Correlação :  " << result << endl;
+    cout << "==================" << endl;
+
+    return 0;
+}
