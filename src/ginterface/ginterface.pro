@@ -27,7 +27,7 @@ FORMS    += mainwindow.ui
 
 RESOURCES += \
     ../mainwindow.qrc
-LIBS += -lopencv_core -lopencv_imgproc -lopencv_highgui
+LIBS += -lopencv_core -lopencv_imgproc -lopencv_highgui -lgsl
 QT += qt3support
 
 
