@@ -15,6 +15,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include "../correlation_area/lib/Correlacao.h"
 
 using namespace std;
 using namespace cv;
@@ -37,6 +38,10 @@ class Reconhecimento_imagem{
 
    static char reconhecer_imagem(Mat realMap);
    static vector<String> * reconhecer_imagem_vector(Mat realMap);
+   static vector<String> * reconhecer_imagem_area_vector(Mat realMap);
+   static char reconhecer_imagem_withvector(Mat realMap,vector<String> letters);
+   static char reconhecer_imagem_area_withvector(Mat realMap,vector<String> letters);
+
 private:
    static Mat letters[27];
 
