@@ -31,7 +31,7 @@ double Correlacao::count_white(Mat square){
 	for(int i=0;i<square.rows;i++){
 		for(int j=0;j<square.cols;j++){
 			//cerr << "in1" << endl;
-			if(square.at<uchar>(i,j)==0){
+			if(square.at<uchar>(i,j) > 0){
 				white += 1;			
 			}
 		}
@@ -44,11 +44,12 @@ void Correlacao::divide_image(Mat image){
 	int num_r = 0;
 
 	cout << image.rows << "::" << image.cols << endl;
-    for(int y = 0; y < image.rows; y+=10){
+
+	for(int y = 0; y < image.rows; y+=10){
 		for(int x = 0; x < image.cols && num_r < this->__size; x+=10){
 			try {
-                if(x == 90 && y == 90) this->rec[num_r] =Tratamento_imagem::cortar_imagem(image, x,y,image.rows-x-1,image.cols-y-1);
-                else this->rec[num_r] =Tratamento_imagem::cortar_imagem(image, x,y,10,10);
+                if(x == 90 && y == 90) this->rec[num_r] = Tratamento_imagem::cortar_imagem(image, x,y,image.rows-x-1,image.cols-y-1);
+                else this->rec[num_r] = Tratamento_imagem::cortar_imagem(image, x,y,10,10);
 				num_r++;	
 			} catch(const ios_base::failure& e) {
     				cout << "Exception" << endl;
@@ -63,6 +64,7 @@ void Correlacao::divide_image(Mat image){
 void Correlacao::mount_vector(Mat image){
 
 	this->divide_image(image);
+
 
 	for(int x = 0; x < __size; x++){
 		this->_feature.push_back(this->count_white(this->rec[x]));

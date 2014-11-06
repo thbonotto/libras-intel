@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "../correlation_area/lib/Correlacao.h"
+#include <pthread.h>
+#include <semaphore.h>
 
 using namespace std;
 using namespace cv;
@@ -26,24 +28,22 @@ class Reconhecimento_imagem{
 
     public:
     Reconhecimento_imagem(){
-        int i =0;
-        static String caminho = "../../img/Tratada/Interno/";
-        static String alfabeto[27] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
-                ,"Q","R","S","T","U","V","W","X","Y","Z"};
-        for(i=0;i<26;i++){
-            this->letters[i] = imread(caminho+alfabeto[i]+".jpg",-1);
-        }
 
     }
-
+   static void* matching(void* arg);
    static char reconhecer_imagem(Mat realMap);
-   static vector<String> * reconhecer_imagem_vector(Mat realMap);
-   static vector<String> * reconhecer_imagem_area_vector(Mat realMap);
-   static char reconhecer_imagem_withvector(Mat realMap,vector<String> letters);
-   static char reconhecer_imagem_area_withvector(Mat realMap,vector<String> letters);
+   static vector<int> * reconhecer_imagem_vector(Mat realMap);
+   static vector<int> * reconhecer_imagem_area_vector(Mat realMap);
+   static char reconhecer_imagem_withvector(Mat realMap, vector<int> *letters);
+   static char reconhecer_imagem_area_withvector(Mat realMap, vector<int> *letters);
+   static void load_images();
 
 private:
-   static Mat letters[27];
+   typedef struct argumentos{
+       int id;
+       Mat realMap;
+       double corr;
+   } Arg;
 
 
 

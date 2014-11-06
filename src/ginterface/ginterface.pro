@@ -16,7 +16,7 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     ../tratamento_imagem/Tratamento_imagem.cc \
     ../correlation/Reconhecimento_imagem.cpp \
-    ../correlation_area/lib/Correlacao.cc
+    ../correlation_area/lib/Correlacao.cc \
 
 HEADERS  += mainwindow.h \
     ../tratamento_imagem/Tratamento_imagem.h \
