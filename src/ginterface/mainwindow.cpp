@@ -11,19 +11,20 @@
 #include <ostream>
 #include <pthread.h>
 #include "../asmOpenCV.h"
+#include <ctime>
 
 using namespace cv;
 using namespace std;
 void  *showImage(void *fodasse);
 MainWindow::MainWindow(QWidget *parent) :   QMainWindow(parent),  ui(new Ui::MainWindow)
 {
-//    pthread_t threads[1];
-//    int rc;
-//    rc = pthread_create(&threads[0], NULL,showImage, (void *)ui);
-//    if (rc){
-//        cout << "Error:unable to create thread," << rc << endl;
-//        exit(-1);
-//    }
+    //    pthread_t threads[1];
+    //    int rc;
+    //    rc = pthread_create(&threads[0], NULL,showImage, (void *)ui);
+    //    if (rc){
+    //        cout << "Error:unable to create thread," << rc << endl;
+    //        exit(-1);
+    //    }
     Reconhecimento_imagem::load_images();
     ui->setupUi(this);
 
@@ -38,6 +39,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_start_clicked()
 {
+    clock_t start;
+    start = clock();
     vector<int>* imageVector = new vector<int>();
     Mat source;
     Mat dest, dest_int;
@@ -47,21 +50,64 @@ void MainWindow::on_start_clicked()
     // source = imread("../../img/src_image/S.jpg");
     QPixmap mypix = cvMatToQPixmap(source);
     ui->pixmapPreview->setPixmap(mypix);
-    try {
-   dest = Tratamento_imagem::tratar_imagem(source);
-   dest_int = Tratamento_imagem::tratar_imagem_contorno_interno(source);
-   cout << "Teste" << endl;
-   imwrite("../../img/_tratada.jpg",dest);
 
-       cout << "ImageVector" << endl;
-       imageVector = Reconhecimento_imagem::reconhecer_imagem_vector(dest_int);
-       cout << "reconhecer_imagem_area_withvector" << imageVector << endl;
-       letra = Reconhecimento_imagem::reconhecer_imagem_area_withvector(dest,imageVector);
-       this->letra_reconhecida(letra);
-       cout << letra << endl;
-   } catch (...) {
-       this->letra_reconhecida('Z');
-   }
+    try {
+        dest = Tratamento_imagem::tratar_imagem(source);
+
+        imwrite("../../e_binarizado.jpg",dest);
+    } catch (...) {
+        this->letra_reconhecida(' ');
+        return;
+        cerr << "error tratamento externo" << endl;
+    }
+    cout << "Metodo area Somente" << endl;
+    start = clock();
+    cout << "Resultado: " << Reconhecimento_imagem::reconhecer_imagem_ext(dest) << endl;
+    cout << "Duração: " << ((clock() - start)/(double)CLOCKS_PER_SEC) << endl;
+    try {
+        dest_int = Tratamento_imagem::tratar_imagem_contorno_interno(source);
+    } catch (...) {
+        cerr << "error tratamento externo" << endl;
+    }
+    cout << "Metodo Correlacao cruzada Somente" << endl;
+    start = clock();
+    cout << "Resultado: " << Reconhecimento_imagem::reconhecer_imagem_int(dest_int) << endl;
+    cout << "Duração: " << ((clock() - start)/(double)CLOCKS_PER_SEC) << endl;
+
+
+    cout << "Metodo 1 entao 2 " << endl;
+    start = clock();
+
+    try {
+        imageVector = Reconhecimento_imagem::reconhecer_imagem_area_vector(dest);
+    } catch (...) {
+        cerr << "error reconhecimento 1" << endl;
+    }
+    try {
+        letra = Reconhecimento_imagem::reconhecer_imagem_withvector(dest_int,imageVector);
+        this->letra_reconhecida(letra);
+    } catch (...) {
+        cerr << "error reconhecimento 2" << endl;
+    }
+    cout << "Resultado: " << letra << endl;
+    cout << "Duração: " << ((clock() - start)/(double)CLOCKS_PER_SEC) << endl;
+    cout << "Metodo 2 entao 1 " << endl;
+    start = clock();
+
+    try {
+        imageVector = Reconhecimento_imagem::reconhecer_imagem_vector(dest_int);
+    } catch (...) {
+        cerr << "error reconhecimento 1" << endl;
+    }
+    try {
+        letra = Reconhecimento_imagem::reconhecer_imagem_area_withvector(dest,imageVector);
+        this->letra_reconhecida(letra);
+    } catch (...) {
+        cerr << "error reconhecimento 2" << endl;
+    }
+    cout << "Resultado: " << letra << endl;
+    cout << "Duração: " << ((clock() - start)/(double)CLOCKS_PER_SEC) << endl;
+
 }
 
 void MainWindow::clickMenuButton(){

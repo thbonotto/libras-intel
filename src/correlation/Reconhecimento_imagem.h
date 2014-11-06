@@ -35,6 +35,8 @@ class Reconhecimento_imagem{
    static vector<int> * reconhecer_imagem_vector(Mat realMap);
    static vector<int> * reconhecer_imagem_area_vector(Mat realMap);
    static char reconhecer_imagem_withvector(Mat realMap, vector<int> *letters);
+   static char reconhecer_imagem_int(Mat realMap);
+   static char reconhecer_imagem_ext(Mat realMap);
    static char reconhecer_imagem_area_withvector(Mat realMap, vector<int> *letters);
    static void load_images();
 

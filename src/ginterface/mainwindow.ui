@@ -702,7 +702,7 @@
      <x>0</x>
      <y>0</y>
      <width>861</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuIALIBRAS">
@@ -718,6 +718,7 @@
     </property>
     <addaction name="actionFiltros"/>
     <addaction name="actionC_mera"/>
+    <addaction name="actionCorrela_es"/>
    </widget>
    <widget class="QMenu" name="menuSObre">
     <property name="title">
@@ -761,6 +762,11 @@
   <action name="actionC_mera">
    <property name="text">
     <string>&amp;Câmera</string>
+   </property>
+  </action>
+  <action name="actionCorrela_es">
+   <property name="text">
+    <string>Correlações</string>
    </property>
   </action>
  </widget>

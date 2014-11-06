@@ -404,7 +404,8 @@ Mat Tratamento_imagem::image_resize(Mat image,int lin,int col){
 }
 //Retorna imagem tratada 
 Mat Tratamento_imagem::tratar_imagem(Mat image) {
-
+    Mat realMap;
+    double maxVal;
     image = Tratamento_imagem::image_resize(image,100,100);
 
     image=image*2;

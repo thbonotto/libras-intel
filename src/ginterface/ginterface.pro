@@ -23,7 +23,8 @@ HEADERS  += mainwindow.h \
     ../correlation/Reconhecimento_imagem.h \
     ../correlation_area/lib/Correlacao.h    \
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialog.ui
 
 RESOURCES += \
     ../mainwindow.qrc

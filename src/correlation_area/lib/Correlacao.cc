@@ -43,7 +43,7 @@ double Correlacao::count_white(Mat square){
 void Correlacao::divide_image(Mat image){
 	int num_r = 0;
 
-	cout << image.rows << "::" << image.cols << endl;
+    //cout << image.rows << "::" << image.cols << endl;
 
 	for(int y = 0; y < image.rows; y+=10){
 		for(int x = 0; x < image.cols && num_r < this->__size; x+=10){
@@ -79,7 +79,7 @@ double Correlacao::pearson_correlation(vector<double> y){
 
 	this->_corr = gsl_stats_correlation((double*) gsl_x.vector.data, this->__stride,(double*) gsl_y.vector.data, this->__stride, this->__size);
 
-	cout << this->_corr << endl;
+    //cout << this->_corr << endl;
 
 	return this->_corr;
 }
